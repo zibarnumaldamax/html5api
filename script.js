@@ -5,15 +5,14 @@ function init() {
         myMap = new ymaps.Map('map', {
             center: [55.76, 37.64],
             zoom: 10,
+            controls: ['routeButtonControl']
         }, {
             searchControlProvider: 'yandex#search'
         });
-
+    
     geolocation.get({
-        // Выставляем опцию для определения положения   
         provider: 'auto',
         autoReverseGeocode: false,
-        // Карта автоматически отцентрируется по положению пользователя.
         mapStateAutoApply: true
     }).then(function (result) {
         result.geoObjects.options.set('preset', 'islands#redCircleIcon');
@@ -22,4 +21,8 @@ function init() {
         });
         myMap.geoObjects.add(result.geoObjects);
     });
+
+    var control = myMap.controls.get('routeButtonControl');
+    control.routePanel.geolocate('from');
+    control.state.set('expanded', true);
 }
