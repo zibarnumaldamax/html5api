@@ -4,8 +4,7 @@ function init() {
     var geolocation = ymaps.geolocation,
         myMap = new ymaps.Map('map', {
             center: [55.76, 37.64],
-            zoom: 10,
-            controls: ['routeButtonControl']
+            zoom: 10
         }, {
             searchControlProvider: 'yandex#search'
         });
@@ -21,6 +20,21 @@ function init() {
         });
         myMap.geoObjects.add(result.geoObjects);
     });
+
+    var routePanel = new ymaps.control.RoutePanel({
+        options: {
+            provider: 'yandex#search'
+        }
+    });
+
+    var searchControl = new ymaps.control.SearchControl({
+        options: {
+            provider: 'yandex#search'
+        }
+    });
+    
+    myMap.controls.add(searchControl);
+    myMap.controls.add(routePanel);
 
     var control = myMap.controls.get('routeButtonControl');
     control.routePanel.geolocate('from');
